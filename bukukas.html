@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <title>APLIKASI BUKU KAS</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+  <link rel="stylesheet" href="style.css">
+  <script src="script.js"></script>
+</head>
+</head>
+<body>
+  <header>📘 APLIKASI BUKU KAS</header>
+  
+  <div class="container">
+    <!-- Login -->
+    <div id="loginDiv" class="card">
+      <h3>🔑 Login</h3>
+      <input type="text" id="username" placeholder="Username">
+      <input type="password" id="password" placeholder="Password">
+      <button onclick="login()">Masuk</button>
+    </div>
+
+    <!-- Buku Kas -->
+    <div id="kasDiv" class="card hidden">
+      <h3>✍️ Catat Transaksi</h3>
+      <input type="date" id="tanggal">
+      <input type="text" id="keterangan" placeholder="Keterangan">
+      <select id="jenis">
+        <option value="Pemasukan">Pemasukan</option>
+        <option value="Pengeluaran">Pengeluaran</option>
+      </select>
+      <input type="number" id="jumlah" placeholder="Jumlah (Rp)">
+      <button onclick="tambahData()">➕ Tambah Transaksi</button>
+
+      <h3>📊 Riwayat Buku Kas</h3>
+      <table id="kasTable">
+        <thead>
+          <tr>
+            <th>Tanggal</th>
+            <th>Keterangan</th>
+            <th>Jenis</th>
+            <th>Jumlah</th>
+            <th>Saldo</th>
+            <th>Aksi</th>
+          </tr>
+        </thead>
+        <tbody></tbody>
+      </table>
+    </div>
+  </div>
+</body>
+</html>
