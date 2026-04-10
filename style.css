@@ -1,12 +1,12 @@
-
+/* --- Global Styles --- */
 * {
-  box-sizing: border-box; /* Mencegah elemen meluap keluar layar */
+  box-sizing: border-box;
 }
 
 body { 
   font-family: 'Segoe UI', Arial, sans-serif; 
   margin: 0; 
-  background: linear-gradient(135deg, #74ebd5 0%, #9face6 100%); /* Warna Gradasi Awal */
+  background: linear-gradient(135deg, #74ebd5 0%, #9face6 100%);
   color: #333; 
   line-height: 1.6;
   min-height: 100vh;
@@ -29,7 +29,7 @@ header {
   margin: 0 auto;
 }
 
-/* --- Kelompok & Badge Anggota --- */
+/* --- Kelompok --- */
 .kelompok {
   background: #fff;
   padding: 20px;
@@ -38,7 +38,6 @@ header {
   margin: 20px auto;
   text-align: center;
   max-width: 500px;
-  animation: fadeIn 0.8s ease-in-out;
 }
 
 .anggota {
@@ -49,13 +48,12 @@ header {
 }
 
 .badge {
-  background: linear-gradient(135deg, #74ebd5, #9face6); /* Warna Badge Gradasi */
+  background: linear-gradient(135deg, #74ebd5, #9face6);
   color: #fff;
   padding: 8px 15px;
   border-radius: 20px;
   font-weight: 600;
   font-size: 14px;
-  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
 }
 
 /* --- Card & Forms --- */
@@ -65,7 +63,6 @@ header {
   border-radius: 12px; 
   box-shadow: 0 6px 12px rgba(0,0,0,0.15); 
   margin-bottom: 20px;
-  animation: fadeIn 0.5s ease-in-out;
 }
 
 input, select, button {
@@ -84,21 +81,15 @@ button {
   border: none; 
   font-weight: bold;
   cursor: pointer;
-  transition: 0.3s;
-}
-
-button:hover { 
-  background: #5E35B1; 
 }
 
 .hidden { display: none; }
 
-/* --- Table Styles --- */
+/* --- Table Styles (Laptop) --- */
 table { 
   width: 100%; 
   border-collapse: collapse; 
   margin-top: 15px;
-  background: white;
 }
 
 th, td { 
@@ -110,43 +101,33 @@ th, td {
 th { 
   background: #f8f9fa; 
   color: #673AB7;
-  font-size: 14px;
 }
 
-/* --- Badge Jenis (Hemat Tempat) --- */
 .badge-jenis {
-  padding: 3px 8px;
-  border-radius: 5px;
-  font-size: 10px;
+  padding: 4px 10px;
+  border-radius: 6px;
+  font-size: 11px;
   font-weight: bold;
   color: white;
-  text-transform: uppercase;
-  display: inline-block;
 }
 .pemasukan { background: #4CAF50; }
 .pengeluaran { background: #f44336; }
 
-/* --- Tombol Silang Merah Saja (❌) --- */
+/* Tombol Hapus Laptop */
 .delete-btn {
-  background: transparent;
-  border: none;
-  font-size: 18px;
+  background: #fff0f0;
+  color: #f44336;
+  border: 2px solid #f44336;
+  padding: 5px 10px;
+  border-radius: 6px;
+  font-weight: 900; /* Super Bold */
   cursor: pointer;
-  padding: 0;
-  margin-left: 8px;
-  transition: transform 0.2s;
-  vertical-align: middle;
-}
-
-.delete-btn:hover {
-  transform: scale(1.3);
+  transition: 0.2s;
 }
 
 /* --- Responsive HP (Mobile View) --- */
 @media screen and (max-width: 600px) {
-  .container { padding: 10px; }
-
-  table thead { display: none; } /* Sembunyikan header di HP */
+  table thead { display: none; }
 
   table, tbody, tr, td {
     display: block;
@@ -154,42 +135,46 @@ th {
   }
 
   tr {
-    margin-bottom: 15px;
-    border: 1px solid #ddd;
+    margin-bottom: 20px;
+    border: 2px solid #673AB7; /* Bingkai luar agar tegas */
     border-radius: 12px;
     padding: 10px;
     background: #fff;
-    position: relative;
-    box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
   }
 
   td {
+    display: flex; /* Membuat tata letak Kiri-Kanan */
+    justify-content: space-between; 
+    align-items: center;
     text-align: right;
-    padding: 10px 15px;
-    position: relative;
-    border: none;
+    padding: 12px 5px;
     border-bottom: 1px solid #f1f1f1;
-    min-height: 40px;
   }
 
-  /* Munculkan Nama Kolom di Sebelah Kiri */
+  /* Penjelasan di Sebelah Kiri */
   td::before {
     content: attr(data-label);
-    position: absolute;
-    left: 15px;
-    font-weight: bold;
-    color: #888;
-    font-size: 11px;
+    font-weight: 900; /* Bold Tebal */
+    color: #673AB7;
     text-transform: uppercase;
+    font-size: 12px;
   }
 
+  /* Khusus kolom terakhir (Aksi/Hapus) agar tombolnya full width */
   td:last-child {
     border-bottom: none;
+    display: block; /* Tombol hapus pindah ke bawah sendiri */
+    text-align: center;
+    padding-top: 15px;
   }
-}
 
-/* --- Animations --- */
-@keyframes fadeIn {
-  from {opacity: 0; transform: translateY(20px);}
-  to {opacity: 1; transform: translateY(0);}
+  .delete-btn {
+    width: 100%; /* Tombol hapus besar di HP */
+    padding: 12px;
+    font-size: 16px;
+    display: block;
+    background: #f44336;
+    color: white;
+  }
 }
