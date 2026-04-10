@@ -74,9 +74,9 @@ const row = `
       <span class="badge-jenis ${item.jenis.toLowerCase()}">${item.jenis}</span>
     </td>
     <td data-label="Jumlah">Rp ${item.jumlah}</td>
-    <td data-label="Saldo">
-      Rp ${item.saldo} 
-      <button class="delete-btn" onclick="hapusData(${index})">❌</button>
+    <td data-label="Saldo">Rp ${item.saldo}</td>
+    <td data-label="Hapus">
+      <button class="delete-btn" onclick="hapusData(${index})">❌ HAPUS DATA</button>
     </td>
   </tr>
 `;
