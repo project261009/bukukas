@@ -2,61 +2,70 @@
 <html lang="id">
 <head>
   <meta charset="UTF-8">
-  <title>APLIKASI BUKU KAS</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <head>
+  <title>APLIKASI BUKU KAS</title>
   <link rel="stylesheet" href="style.css">
-  <script src="script.js"></script>
-</head>
+  <script src="script.js" defer></script>
 </head>
 <body>
+
   <header>📘 APLIKASI BUKU KAS</header>
-  <div class="kelompok">
-  <h3>👥 Kelompok</h3>
-  <div class="anggota">
-    <span class="badge">Rissa</span>
-    <span class="badge">Zaratus</span>
-    <span class="badge">Safira</span>
-    <span class="badge">Indah</span>
-    <span class="badge">Nadia</span>
-  </div>
-  
-  <div class="container">
-    <!-- Login -->
-    <div id="loginDiv" class="card">
-      <h3>🔑 Login</h3>
-      <input type="text" id="username" placeholder="Username">
-      <input type="password" id="password" placeholder="Password">
-      <button onclick="login()">Masuk</button>
-    </div>
 
-    <!-- Buku Kas -->
-    <div id="kasDiv" class="card hidden">
-      <h3>✍️ Catat Transaksi</h3>
-      <input type="date" id="tanggal">
-      <input type="text" id="keterangan" placeholder="Keterangan">
-      <select id="jenis">
-        <option value="Pemasukan">Pemasukan</option>
-        <option value="Pengeluaran">Pengeluaran</option>
-      </select>
-      <input type="number" id="jumlah" placeholder="Jumlah (Rp)">
-      <button onclick="tambahData()">➕ Tambah Transaksi</button>
+  <div class="main-wrapper">
+    <section class="kelompok">
+      <h3>👥 Kelompok</h3>
+      <div class="anggota">
+        <span class="badge">Rissa</span>
+        <span class="badge">Zaratus</span>
+        <span class="badge">Safira</span>
+        <span class="badge">Indah</span>
+        <span class="badge">Nadia</span>
+      </div>
+    </section>
 
-      <h3>📊 Riwayat Buku Kas</h3>
-      <table id="kasTable">
-        <thead>
-          <tr>
-            <th>Tanggal</th>
-            <th>Keterangan</th>
-            <th>Jenis</th>
-            <th>Jumlah</th>
-            <th>Saldo</th>
-            <th>Aksi</th>
-          </tr>
-        </thead>
-        <tbody></tbody>
-      </table>
-    </div>
+    <main class="container">
+      <div id="loginDiv" class="card">
+        <h3>🔑 Login</h3>
+        <div class="form-group">
+          <input type="text" id="username" placeholder="Username">
+          <input type="password" id="password" placeholder="Password">
+          <button onclick="login()">Masuk</button>
+        </div>
+      </div>
+
+      <div id="kasDiv" class="card hidden">
+        <h3>✍️ Catat Transaksi</h3>
+        <div class="form-grid">
+          <input type="date" id="tanggal">
+          <input type="text" id="keterangan" placeholder="Keterangan">
+          <select id="jenis">
+            <option value="Pemasukan">Pemasukan</option>
+            <option value="Pengeluaran">Pengeluaran</option>
+          </select>
+          <input type="number" id="jumlah" placeholder="Jumlah (Rp)">
+        </div>
+        <button class="btn-primary" onclick="tambahData()">➕ Tambah Transaksi</button>
+
+        <hr>
+
+        <h3>📊 Riwayat Buku Kas</h3>
+        <div class="table-responsive">
+          <table id="kasTable">
+            <thead>
+              <tr>
+                <th>Tanggal</th>
+                <th>Keterangan</th>
+                <th>Jenis</th>
+                <th>Jumlah</th>
+                <th>Saldo</th>
+              </tr>
+            </thead>
+            <tbody>
+              </tbody>
+          </table>
+        </div>
+      </div>
+    </main>
   </div>
 </body>
 </html>
