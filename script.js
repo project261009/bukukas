@@ -1,16 +1,20 @@
 let saldo = 0;
 let dataKas = JSON.parse(localStorage.getItem("kasData")) || [];
 
+// daftar password sah (plaintext sederhana untuk demo)
+const validPasswords = ["zaratus", "rissa", "indah", "safira", "nadia"];
+
 function login() {
   const user = document.getElementById("username").value;
   const pass = document.getElementById("password").value;
-  
-  if (user === "admin" && pass === "1234") {
+
+  // cek username dan password
+  if (user === "admin" && validPasswords.includes(pass)) {
     document.getElementById("loginDiv").classList.add("hidden");
     document.getElementById("kasDiv").classList.remove("hidden");
     loadData();
   } else {
-    alert("Login gagal! Username: admin, Password: 1234");
+    alert("Login gagal! Username atau password salah.");
   }
 }
 
@@ -42,18 +46,18 @@ function loadData() {
   saldo = 0;
   const tbody = document.getElementById("kasTable").getElementsByTagName("tbody")[0];
   tbody.innerHTML = "";
-  
+
   dataKas.forEach((item, index) => {
     if (item.jenis === "Pemasukan") saldo += item.jumlah;
     else saldo -= item.jumlah;
-    
+
     const row = tbody.insertRow();
     row.insertCell(0).innerText = item.tanggal;
     row.insertCell(1).innerText = item.ket;
     row.insertCell(2).innerText = item.jenis;
     row.insertCell(3).innerText = "Rp " + item.jumlah.toLocaleString("id-ID");
     row.insertCell(4).innerText = "Rp " + saldo.toLocaleString("id-ID");
-    
+
     const aksiCell = row.insertCell(5);
     const delBtn = document.createElement("button");
     delBtn.innerText = "Hapus";
