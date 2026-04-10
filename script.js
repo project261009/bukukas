@@ -66,3 +66,17 @@ function loadData() {
     aksiCell.appendChild(delBtn);
   });
 }
+const row = `
+  <tr>
+    <td data-label="Tanggal">${item.tanggal}</td>
+    <td data-label="Keterangan">${item.keterangan}</td>
+    <td data-label="Jenis">
+      <span class="badge-jenis ${item.jenis.toLowerCase()}">${item.jenis}</span>
+    </td>
+    <td data-label="Jumlah">Rp ${item.jumlah}</td>
+    <td data-label="Saldo">
+      Rp ${item.saldo} 
+      <button class="delete-btn" onclick="hapusData(${index})">❌</button>
+    </td>
+  </tr>
+`;
