@@ -1,6 +1,4 @@
-// 1. PENGATURAN API (GANTI URL DI BAWAH INI)
-// ============================================================
-const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzMa6kc2jgpkteO_S0wJesHqLU9g8AUFDfXqFC1OvxB8pjgE8i04x3Ui7vUi44SAY0W/exec"; 
+const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyxo_svLeHzjJ1HL9PQEmwhF_Q31Rwfecz-i6eQp_cjxm1HqwDI85UjZEP_K9f3F1Fq/exec"; 
 
 // ============================================================
 // 2. DATA UTAMA & LOGIN
@@ -23,7 +21,7 @@ function login() {
 }
 
 // ============================================================
-// 3. FUNGSI TAMBAH DATA (LOCAL + GOOGLE SHEETS)
+// 3. FUNGSI TAMBAH DATA (LOKAL + CLOUD)
 // ============================================================
 function tambahData() {
   const tanggal = document.getElementById("tanggal").value;
@@ -31,51 +29,70 @@ function tambahData() {
   const jenis = document.getElementById("jenis").value;
   const jumlah = parseFloat(document.getElementById("jumlah").value);
 
-  // Validasi Input
   if (!tanggal || !ket || !jumlah) {
     alert("Lengkapi semua data transaksi!");
     return;
   }
 
-  const payload = { tanggal, ket, jenis, jumlah };
+  // Label "action: add" agar Google Sheets tahu ini data baru
+  const payload = { 
+    action: "add", 
+    tanggal, 
+    ket, 
+    jenis, 
+    jumlah 
+  };
 
-  // --- SIMPAN KE LOCAL STORAGE (Agar muncul di tabel HP/Laptop) ---
-  dataKas.push(payload);
+  // --- SIMPAN KE LOKAL (Agar langsung muncul di tabel) ---
+  dataKas.push({tanggal, ket, jenis, jumlah});
   localStorage.setItem("kasData", JSON.stringify(dataKas));
-  loadData(); // Update tabel di layar
+  loadData();
 
-  // --- KIRIM KE GOOGLE SHEETS (Cloud Backup) ---
+  // --- KIRIM KE GOOGLE SHEETS ---
   fetch(SCRIPT_URL, {
     method: "POST",
-    mode: "no-cors", 
-    headers: { "Content-Type": "application/json" },
+    mode: "no-cors",
     body: JSON.stringify(payload)
   })
-  .then(() => {
-    console.log("Data Berhasil Terkirim ke Cloud!");
-    alert("Berhasil! Data tersimpan di HP & Google Sheets.");
-  })
-  .catch(err => {
-    console.error("Gagal kirim ke Cloud: ", err);
-    alert("Tersimpan di HP, tapi gagal kirim ke Cloud (Cek Internet).");
-  });
+  .then(() => console.log("Data berhasil terkirim ke Cloud"));
 
-  // Kosongkan Form setelah input
+  // Kosongkan form input
   document.getElementById("keterangan").value = "";
   document.getElementById("jumlah").value = "";
 }
 
 // ============================================================
-// 4. FUNGSI TAMPILKAN DATA & HAPUS
+// 4. FUNGSI HAPUS DATA (LOKAL + CLOUD)
 // ============================================================
 function hapusData(index) {
-  if (confirm("Yakin ingin menghapus transaksi ini dari HP? (Data di Google Sheets tidak akan ikut terhapus)")) {
+  const itemHapus = dataKas[index]; // Ambil data yang akan dihapus
+
+  if (confirm(`Yakin ingin menghapus transaksi "${itemHapus.ket}"? (Data di Google Sheets juga akan terhapus)`)) {
+    
+    // Kirim perintah "action: delete" ke Google Sheets
+    const deletePayload = {
+      action: "delete",
+      tanggal: itemHapus.tanggal,
+      ket: itemHapus.ket
+    };
+
+    fetch(SCRIPT_URL, {
+      method: "POST",
+      mode: "no-cors",
+      body: JSON.stringify(deletePayload)
+    })
+    .then(() => console.log("Perintah hapus terkirim ke Cloud"));
+
+    // Hapus dari memori HP/Laptop dan update tabel
     dataKas.splice(index, 1);
     localStorage.setItem("kasData", JSON.stringify(dataKas));
     loadData();
   }
 }
 
+// ============================================================
+// 5. FUNGSI TAMPILKAN TABEL (LOAD DATA)
+// ============================================================
 function loadData() {
   saldo = 0;
   const tbody = document.getElementById("kasTable").getElementsByTagName("tbody")[0];
@@ -85,7 +102,6 @@ function loadData() {
     if (item.jenis === "Pemasukan") saldo += item.jumlah;
     else saldo -= item.jumlah;
 
-    // Membuat Baris Tabel (Sesuai format Bapak)
     const row = tbody.insertRow();
     row.innerHTML = `
       <td data-label="Tanggal">${item.tanggal}</td>
@@ -95,8 +111,8 @@ function loadData() {
       </td>
       <td data-label="Jumlah">Rp ${item.jumlah.toLocaleString("id-ID")}</td>
       <td data-label="Saldo">Rp ${saldo.toLocaleString("id-ID")}</td>
-      <td data-label="Aksi">
-        <button class="delete-btn" onclick="hapusData(${index})">❌ HAPUS</button>
+      <td data-label="Hapus">
+        <button class="delete-btn" onclick="hapusData(${index})">❌ HAPUS DATA</button>
       </td>
     `;
   });
